@@ -20,7 +20,7 @@ class ModuleContainer
             return;
         }
 
-        Logger.log(LogLevel.Debug, "Added factory:", name);
+        Logger.log(LogLevel.Debug, "Added module factory:", name);
 
         this._factories[name] = factory;
     }

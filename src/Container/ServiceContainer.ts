@@ -21,7 +21,7 @@ class ServiceContainer
             return;
         }
 
-        Logger.log(LogLevel.Debug, "Added factory: ", name);
+        Logger.log(LogLevel.Debug, "Added service factory:", name);
 
         this._factories[name] = factory;
     }
