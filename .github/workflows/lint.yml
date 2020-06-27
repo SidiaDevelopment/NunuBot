@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Linting
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -24,4 +24,4 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Linting
-      run: npm run eslint
+      run: npm run lint
