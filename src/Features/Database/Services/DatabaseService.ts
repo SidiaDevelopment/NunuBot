@@ -7,7 +7,7 @@ class DatabaseService extends AbstractService
 
     private _connection: TypeORM.Connection;
 
-    public StartUp()
+    public StartUp(): void
     {
         super.StartUp();
 
