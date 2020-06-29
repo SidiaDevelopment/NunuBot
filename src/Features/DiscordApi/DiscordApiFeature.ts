@@ -1,6 +1,5 @@
-import AbstractFeature from "../../Global/Base/AbstractFeature";
+import AbstractFeature, {IFactories, IPermissions} from "../../Global/Base/AbstractFeature";
 import DiscordApiFactory from "./Factories/DiscordApiFactory";
-import {IFactories} from "../../Global/Interfaces/FactoryInterfaces";
 import DiscordEventApiFactory from "./Factories/DiscordEventApiFactory";
 
 class DiscordApiFeature extends AbstractFeature
@@ -12,6 +11,7 @@ class DiscordApiFeature extends AbstractFeature
     };
 
     protected _moduleFactories: IFactories;
+    protected _permissions: IPermissions;
 }
 
 export default DiscordApiFeature;

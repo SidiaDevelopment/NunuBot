@@ -16,11 +16,6 @@ class PermissionModel extends AbstractGuildModel<IPermission, Permission>
     {
         const permission = await Permission.find({name, guildId});
 
-        if (permission == null)
-        {
-            return null;
-        }
-
         return permission;
     }
 

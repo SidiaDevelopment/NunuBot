@@ -1,12 +1,21 @@
 import ServiceContainer from "../../Container/ServiceContainer";
 import FeatureInterface from "../Interfaces/FeatureInterface";
-import {IFactories} from "../Interfaces/FactoryInterfaces";
 import ModuleContainer from "../../Container/ModuleContainer";
+import AbstractFactory from "../Base/AbstractFactory";
+
+export type IFactory = new () => AbstractFactory;
+export interface IFactories
+{
+    [id: string]: IFactory;
+}
+
+export type IPermissions = Array<string>;
 
 abstract class AbstractFeature implements FeatureInterface
 {
     protected abstract _serviceFactories: IFactories;
     protected abstract _moduleFactories: IFactories;
+    protected abstract _permissions: IPermissions;
 
     public AddServiceFactories(): void
     {

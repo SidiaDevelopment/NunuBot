@@ -9,7 +9,7 @@ interface IGuildModel<T>
     [index: string]: ICacheElement<T>
 }
 
-abstract class AbstractGuildModel<T, OriginT>
+abstract class AbstractGuildModel<T, OriginT = T>
 {
     protected _container: IGuildModel<T> = {};
     protected _expire = -1;
@@ -48,7 +48,10 @@ abstract class AbstractGuildModel<T, OriginT>
     }
 
     protected abstract async Load(guildId: string, name: string): Promise<OriginT[]>;
-    protected abstract Mapping(entity: OriginT): T;
+
+    protected Mapping(entity: OriginT): T {
+        return entity as unknown as T;
+    }
 }
 
 export default AbstractGuildModel;

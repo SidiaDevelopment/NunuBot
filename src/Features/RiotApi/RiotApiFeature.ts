@@ -1,5 +1,4 @@
-import AbstractFeature from "../../Global/Base/AbstractFeature";
-import {IFactories} from "../../Global/Interfaces/FactoryInterfaces";
+import AbstractFeature, {IFactories, IPermissions} from "../../Global/Base/AbstractFeature";
 import RiotApiFactory from "./Factories/RiotApiFactory";
 
 class RiotApiFeature extends AbstractFeature
@@ -10,11 +9,7 @@ class RiotApiFeature extends AbstractFeature
     };
     protected _moduleFactories: IFactories;
 
-    StartUpServices(): void
-    {
-        return;
-    }
-
+    protected _permissions: IPermissions;
 }
 
 export default RiotApiFeature;
