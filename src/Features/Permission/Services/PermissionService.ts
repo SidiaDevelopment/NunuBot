@@ -23,7 +23,7 @@ class PermissionService extends AbstractService
         return false;
     }
 
-    public StartUp()
+    public StartUp(): void
     {
         super.StartUp();
     }
