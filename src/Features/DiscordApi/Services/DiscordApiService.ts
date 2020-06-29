@@ -1,18 +1,20 @@
 import * as Discord from "discord.js";
 import AbstractService from "../../../Global/Base/AbstractService";
 import Logger, {LogLevel} from "../../Logging/Helper/Logger";
-import * as Config from "../../../Config/config.json"
+import SettingsService from "../../Settings/Services/SettingsService";
 
-class DiscordApi extends AbstractService
+class DiscordApiService extends AbstractService
 {
-    public name = "DiscordApi";
+    public name = "DiscordApiService";
 
     private readonly _client: Discord.Client;
+    private readonly _settingsService: SettingsService;
 
-    constructor(client: Discord.Client)
+    constructor(client: Discord.Client, settingsService: SettingsService)
     {
         super();
         this._client = client;
+        this._settingsService = settingsService;
     }
 
     StartUp(): void
@@ -26,7 +28,8 @@ class DiscordApi extends AbstractService
 
     public async Login(): Promise<void>
     {
-        await this._client.login(Config.discordApiKey);
+        const key = await this._settingsService.GetGlobal("DiscordApi.ApiKey")
+        await this._client.login(key);
     }
 
     public GetClient(): Discord.Client {
@@ -34,4 +37,4 @@ class DiscordApi extends AbstractService
     }
 }
 
-export default DiscordApi;
+export default DiscordApiService;

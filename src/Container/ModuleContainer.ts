@@ -1,6 +1,6 @@
 import Logger, {LogLevel} from "../Features/Logging/Helper/Logger";
 import AbstractModule from "../Global/Base/AbstractModule";
-import {IFactories, IFactory} from "../Global/Interfaces/FactoryInterfaces";
+import {IFactories, IFactory} from "../Global/Base/AbstractFeature";
 
 interface IModuleContainer
 {
@@ -16,7 +16,7 @@ class ModuleContainer
     {
         if (name in this._factories)
         {
-            Logger.log(LogLevel.Error, "Factory already added:", name);
+            Logger.log(LogLevel.Error, "Factories already added:", name);
             return;
         }
 

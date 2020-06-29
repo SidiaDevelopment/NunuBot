@@ -1,12 +1,19 @@
+import Logger, {LogLevel} from "../../Features/Logging/Helper/Logger";
+
 export interface ICacheElement<T>
 {
     expire: number;
     value: T[];
 }
 
+interface IGuildGroup<T>
+{
+    [index: string]: ICacheElement<T>;
+}
+
 interface IGuildModel<T>
 {
-    [index: string]: ICacheElement<T>
+    [index: string]: IGuildGroup<T>
 }
 
 abstract class AbstractGuildModel<T, OriginT = T>
@@ -16,25 +23,34 @@ abstract class AbstractGuildModel<T, OriginT = T>
 
     public async Get(guildId: string, name: string): Promise<T[]>
     {
-        const index = guildId + name;
-        if (index in this._container) {
-            const element = this._container[index];
-            if (Date.now() > element.expire && this._expire != -1) {
-                delete this._container[index];
-            } else {
-                return element.value;
+        if (guildId in this._container)
+        {
+            const guildGroup = this._container[guildId];
+            if (name in guildGroup)
+            {
+                const element = guildGroup[name];
+                if (Date.now() > element.expire && this._expire != -1)
+                {
+                    delete this._container[guildId][name];
+                } else
+                {
+                    return element.value;
+                }
             }
+        } else
+        {
+            this._container[guildId] = {};
         }
 
         const entity = await this.Load(guildId, name);
-
-        if (entity == null) {
+        if (entity == null)
+        {
             return null;
         }
 
         const newElement = entity.map(this.Mapping)
 
-        this._container[index] = {
+        this._container[guildId][name] = {
             expire: Date.now() + this._expire * 1000,
             value: newElement
         };
@@ -43,13 +59,34 @@ abstract class AbstractGuildModel<T, OriginT = T>
 
     }
 
-    public Flush(): void {
+    public Flush(): void
+    {
         this._container = {};
+    }
+
+    public FlushGuild(guildId: string): void
+    {
+        if (guildId in this._container)
+        {
+            delete this._container[guildId];
+        }
+    }
+
+    public FlushValue(guildId: string, name: string): void
+    {
+        if (guildId in this._container)
+        {
+            if (name in this._container[guildId])
+            {
+                delete this._container[guildId][name];
+            }
+        }
     }
 
     protected abstract async Load(guildId: string, name: string): Promise<OriginT[]>;
 
-    protected Mapping(entity: OriginT): T {
+    protected Mapping(entity: OriginT): T
+    {
         return entity as unknown as T;
     }
 }

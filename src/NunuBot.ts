@@ -1,12 +1,17 @@
 import Logger, {LogLevel} from "./Features/Logging/Helper/Logger";
 import Features from "./Features";
 
+export enum Phase {
+    Startup,
+    Running,
+    Shutdown,
+}
+
 class NunuBot
 {
-	/**
-	 * Start the bot
-	 */
-	public start(): void
+    public static Phase: Phase = Phase.Startup;
+
+	public Start(): void
 	{
         Logger.log(LogLevel.Debug, "Starting bot");
         const features = new Features();

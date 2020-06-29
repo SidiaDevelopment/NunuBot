@@ -3,7 +3,7 @@ import AbstractService from "../../../Global/Base/AbstractService";
 
 type MessageCallback = (message: Discord.Message) => void;
 
-class DiscordEventApi extends AbstractService
+class DiscordEventApiService extends AbstractService
 {
     public name = "DiscordEventApi";
     private readonly _client: Discord.Client;
@@ -19,4 +19,4 @@ class DiscordEventApi extends AbstractService
     }
 }
 
-export default DiscordEventApi;
+export default DiscordEventApiService;

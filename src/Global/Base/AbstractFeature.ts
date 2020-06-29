@@ -2,6 +2,10 @@ import ServiceContainer from "../../Container/ServiceContainer";
 import FeatureInterface from "../Interfaces/FeatureInterface";
 import ModuleContainer from "../../Container/ModuleContainer";
 import AbstractFactory from "../Base/AbstractFactory";
+import {ISettings} from "../../Features/Settings/Services/SettingsService";
+import DefaultSettingsContainer from "../../Container/DefaultSettingsContainer";
+import DefaultPermissionContainer from "../../Container/DefaultPermissionContainer";
+import {IDefaultPermissions} from "../../Features/Permission/Services/PermissionService";
 
 export type IFactory = new () => AbstractFactory;
 export interface IFactories
@@ -9,13 +13,12 @@ export interface IFactories
     [id: string]: IFactory;
 }
 
-export type IPermissions = Array<string>;
-
 abstract class AbstractFeature implements FeatureInterface
 {
-    protected abstract _serviceFactories: IFactories;
-    protected abstract _moduleFactories: IFactories;
-    protected abstract _permissions: IPermissions;
+    protected _serviceFactories: IFactories;
+    protected _moduleFactories: IFactories;
+    protected _permissions: IDefaultPermissions;
+    protected _settings: ISettings;
 
     public AddServiceFactories(): void
     {
@@ -53,15 +56,14 @@ abstract class AbstractFeature implements FeatureInterface
 
         Object.keys(this._serviceFactories).forEach(v =>
         {
-            const name = v;
-            const service = serviceContainer.Get(name);
+            const service = serviceContainer.Get(v);
             service.StartUp();
         })
     }
 
-    public StartUpModules(): void
-    {
-        return;
+    public LoadSettings(): void {
+        DefaultSettingsContainer.AddRange(this._settings);
+        DefaultPermissionContainer.AddRange(this._permissions);
     }
 }
 

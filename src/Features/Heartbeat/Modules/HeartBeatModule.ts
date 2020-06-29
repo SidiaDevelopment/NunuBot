@@ -1,31 +1,20 @@
 import AbstractModule from "../../../Global/Base/AbstractModule";
-import * as Discord from "discord.js";
-import ServiceContainer from "../../../Container/ServiceContainer";
-import PermissionService from "../../Permission/Services/PermissionService";
+import PingCommand from "../Commands/PingCommand";
+import {ICommand} from "../../Command/Services/CommandService";
 
 class HeartbeatModule extends AbstractModule
 {
     public name = "HeartbeatModule";
 
-    protected _commands = [
+    protected _commands: ICommand[] = [
         {
             command: "ping",
-            callback: HeartbeatModule.OnPing
+            callback: PingCommand.OnPing,
+            permissions: {
+                allowByDefault: true
+            }
         }
     ];
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    private static async OnPing(message: Discord.Message, ...args: string[]): Promise<void>
-    {
-        const perm = await ServiceContainer.Get<PermissionService>(PermissionService.name).HasPermission(message.guild, "command.ping", message.member);
-
-        if (!perm)
-        {
-            message.reply("You do not have permission to do this");
-            return;
-        }
-        message.reply("Pong");
-    }
 }
 
 export default HeartbeatModule;

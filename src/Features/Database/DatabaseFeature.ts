@@ -1,4 +1,4 @@
-import AbstractFeature, {IFactories, IPermissions} from "../../Global/Base/AbstractFeature";
+import AbstractFeature, {IFactories} from "../../Global/Base/AbstractFeature";
 import DatabaseServiceFactory from "./Factories/DatabaseServiceFactory";
 
 class DatabaseFeature extends AbstractFeature
@@ -7,7 +7,6 @@ class DatabaseFeature extends AbstractFeature
     protected _serviceFactories: IFactories = {
         "DatabaseService": DatabaseServiceFactory
     };
-    protected _permissions: IPermissions;
 }
 
 export default DatabaseFeature;

@@ -6,6 +6,9 @@ import HeartbeatFeature from "./Features/Heartbeat/HeartbeatFeature";
 import ModuleContainer from "./Container/ModuleContainer";
 import DatabaseFeature from "./Features/Database/DatabaseFeature";
 import PermissionFeature from "./Features/Permission/PermissionFeature";
+import SettingsFeature from "./Features/Settings/SettingsFeature";
+import NunuBot, {Phase} from "./NunuBot";
+import DefaultPermissionContainer from "./Container/DefaultPermissionContainer";
 
 class Features
 {
@@ -16,10 +19,15 @@ class Features
         new CommandFeature,
         new HeartbeatFeature,
         new PermissionFeature,
+        new SettingsFeature,
     ];
 
     public LoadFeatures(): void
     {
+        this._features.forEach(v => {
+            v.LoadSettings();
+        });
+
         this._features.forEach(v => {
             v.AddServiceFactories();
         });
@@ -33,6 +41,9 @@ class Features
         });
 
         ModuleContainer.LoadAll();
+
+        console.log(DefaultPermissionContainer.Values());
+        NunuBot.Phase = Phase.Running;
     }
 }
 

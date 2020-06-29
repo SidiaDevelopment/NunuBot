@@ -4,7 +4,6 @@ interface FeatureInterface
     AddModuleFactories(): void;
 
     StartUpServices(): void;
-    StartUpModules(): void;
 }
 
 export default FeatureInterface;

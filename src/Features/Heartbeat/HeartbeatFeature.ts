@@ -1,5 +1,6 @@
-import AbstractFeature, {IFactories, IPermissions} from "../../Global/Base/AbstractFeature";
+import AbstractFeature, {IFactories} from "../../Global/Base/AbstractFeature";
 import HeartbeatModuleFactory from "./Factories/HeartbeatModuleFactory";
+import {ISettings} from "../Settings/Services/SettingsService";
 
 class HeartbeatFeature extends AbstractFeature
 {
@@ -7,9 +8,12 @@ class HeartbeatFeature extends AbstractFeature
     protected _moduleFactories: IFactories = {
         "HeartbeatModule": HeartbeatModuleFactory
     };
-    protected _permissions: IPermissions = [
-        "command.ping"
-    ];
+
+    protected _settings: ISettings = {
+        "Heartbeat.PingMessage": {
+            value: "Pong",
+        }
+    }
 }
 
 export default HeartbeatFeature;
