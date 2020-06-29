@@ -3,7 +3,6 @@ import DiscordApiServiceFactory from "./Factories/DiscordApiServiceFactory";
 import DiscordEventApiServiceFactory from "./Factories/DiscordEventApiServiceFactory";
 import {ISettings} from "../Settings/Services/SettingsService";
 import * as Config from "../../Config/config.json";
-import {IDefaultPermissions} from "../Permission/Services/PermissionService";
 
 class DiscordApiFeature extends AbstractFeature
 {

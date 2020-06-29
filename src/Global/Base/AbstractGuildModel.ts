@@ -1,5 +1,3 @@
-import Logger, {LogLevel} from "../../Features/Logging/Helper/Logger";
-
 export interface ICacheElement<T>
 {
     expire: number;
