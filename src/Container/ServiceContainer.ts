@@ -1,6 +1,6 @@
 import AbstractService from "../Global/Base/AbstractService";
 import AbstractFactory from "../Global/Base/AbstractFactory";
-import Logger, {LogLevel} from "../Helper/Logger";
+import Logger, {LogLevel} from "../Features/Logging/Helper/Logger";
 import {IFactories, IFactory} from "../Global/Interfaces/FactoryInterfaces";
 
 interface IServiceContainer

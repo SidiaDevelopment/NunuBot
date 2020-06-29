@@ -1,4 +1,4 @@
-import Logger, {LogLevel} from "../Helper/Logger";
+import Logger, {LogLevel} from "../Features/Logging/Helper/Logger";
 import AbstractModule from "../Global/Base/AbstractModule";
 import {IFactories, IFactory} from "../Global/Interfaces/FactoryInterfaces";
 

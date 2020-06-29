@@ -5,6 +5,7 @@ import CommandFeature from "./Features/Command/CommandFeature";
 import HeartbeatFeature from "./Features/Heartbeat/HeartbeatFeature";
 import ModuleContainer from "./Container/ModuleContainer";
 import DatabaseFeature from "./Features/Database/DatabaseFeature";
+import PermissionFeature from "./Features/Permission/PermissionFeature";
 
 class Features
 {
@@ -13,7 +14,8 @@ class Features
         new DiscordApiFeature,
         new RiotApiFeature,
         new CommandFeature,
-        new HeartbeatFeature
+        new HeartbeatFeature,
+        new PermissionFeature,
     ];
 
     public LoadFeatures(): void

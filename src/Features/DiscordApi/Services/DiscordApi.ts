@@ -1,7 +1,7 @@
 import * as Discord from "discord.js";
 import AbstractService from "../../../Global/Base/AbstractService";
-import Logger, {LogLevel} from "../../../Helper/Logger";
-import * as Config from "../../../config/config.json"
+import Logger, {LogLevel} from "../../Logging/Helper/Logger";
+import * as Config from "../../../Config/config.json"
 
 class DiscordApi extends AbstractService
 {

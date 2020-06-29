@@ -1,5 +1,7 @@
 import AbstractModule from "../../../Global/Base/AbstractModule";
 import * as Discord from "discord.js";
+import ServiceContainer from "../../../Container/ServiceContainer";
+import PermissionService from "../../Permission/Services/PermissionService";
 
 class HeartbeatModule extends AbstractModule
 {
@@ -13,9 +15,16 @@ class HeartbeatModule extends AbstractModule
     ];
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    private static OnPing(message: Discord.Message, ...args: string[]): void
+    private static async OnPing(message: Discord.Message, ...args: string[]): Promise<void>
     {
-        message.reply("Pong")
+        const perm = await ServiceContainer.Get<PermissionService>(PermissionService.name).HasPermission(message.guild, "command.ping", message.member);
+
+        if (!perm)
+        {
+            message.reply("You do not have permission to do this");
+            return;
+        }
+        message.reply("Pong");
     }
 }
 
