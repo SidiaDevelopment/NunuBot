@@ -5,6 +5,7 @@ import SettingsModel, {ISerializedSetting} from "../Models/SettingsModel";
 import NunuBot, {Phase} from "../../../NunuBot";
 import DefaultSettingsContainer from "../../../Container/DefaultSettingsContainer";
 import MessageFormatter from "../../DiscordApi/Helper/MessageFormatter";
+import LocalizationService from "../../Localization/Services/LocalizationService";
 
 export interface ISetting
 {
@@ -23,12 +24,14 @@ class SettingsService extends AbstractService
 {
     public name = "PermissionService";
 
-    private _databaseService: DatabaseService;
+    private readonly _databaseService: DatabaseService;
+    private readonly _localizationService: LocalizationService;
 
-    constructor(databaseService: DatabaseService)
+    constructor(databaseService: DatabaseService, localizationService: LocalizationService)
     {
         super();
         this._databaseService = databaseService;
+        this._localizationService = localizationService;
     }
 
     public async Get(guild: Discord.Guild, name: string): Promise<string>
@@ -58,7 +61,6 @@ class SettingsService extends AbstractService
         if (value == null || value.length <= 0)
         {
             const defaultValues = DefaultSettingsContainer.Values();
-
             if (name in defaultValues)
             {
                 const setting = defaultValues[name];
@@ -83,14 +85,20 @@ class SettingsService extends AbstractService
         {
             if (defaultValues[name].onlyGlobal)
             {
-                await message.channel.send(MessageFormatter.EmbedMessage(":x: Update failed: This setting cannot be changed per server", false));
+                const text = await this._localizationService.Translate(message.guild, "settings.onlyGlobal");
+                await message.channel.send(MessageFormatter.FailMessage(text));
                 return false;
             }
+
             await SettingsModel.Update(message.guild.id, name, value);
+            const text = await this._localizationService.Translate(message.guild, "settings.success", {name});
+            SettingsModel.FlushValue(message.guild.id, name);
+            await message.channel.send(MessageFormatter.SuccessMessage(text));
             return true;
         }
 
-        await message.channel.send(MessageFormatter.EmbedMessage(":x: Update failed: This setting does not exist", false));
+        const text = await this._localizationService.Translate(message.guild, "settings.doesNotExist");
+        await message.channel.send(MessageFormatter.FailMessage(text));
         return false;
     }
 
@@ -99,10 +107,41 @@ class SettingsService extends AbstractService
         const defaultValues = DefaultSettingsContainer.Values();
         if (!(name in defaultValues))
         {
-            await message.channel.send(MessageFormatter.EmbedMessage(":x: Update failed: This setting does not exist", false));
+            const text = await this._localizationService.Translate(message.guild, "settings.doesNotExist");
+            await message.channel.send(MessageFormatter.FailMessage(text));
         }
         await SettingsModel.Delete(message.guild.id, name);
-        await message.channel.send(MessageFormatter.EmbedMessage(":white_check_mark: Successfully reset"));
+        const text = await this._localizationService.Translate(message.guild, "settings.reset");
+        await message.channel.send(MessageFormatter.SuccessMessage(text));
+    }
+
+    public async PrintSetting(message: Discord.Message, name: string): Promise<void>
+    {
+        if (!this.CanPrint(name)) {
+            const text = await this._localizationService.Translate(message.guild, "settings.doesNotExist");
+            await message.channel.send(MessageFormatter.FailMessage(text));
+            return;
+        }
+
+        const value = await this.Get(message.guild, name);
+
+        if (value != null) {
+            await message.channel.send(MessageFormatter.Message(value));
+            return;
+        }
+        const text = await this._localizationService.Translate(message.guild, "settings.doesNotExist");
+        await message.channel.send(MessageFormatter.FailMessage(text));
+    }
+
+    public CanPrint(name: string): boolean {
+        const defaultValues = DefaultSettingsContainer.Values();
+
+        if (name in defaultValues) {
+            const element = defaultValues[name];
+            return element.printable !== false;
+        }
+
+        return false;
     }
 }
 

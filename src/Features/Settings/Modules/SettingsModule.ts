@@ -3,9 +3,6 @@ import {ICommand} from "../../Command/Services/CommandService";
 import Discord from "discord.js";
 import SettingsService from "../Services/SettingsService";
 import DatabaseService from "../../Database/Services/DatabaseService";
-import MessageFormatter from "../../DiscordApi/Helper/MessageFormatter";
-import SettingsModel from "../Models/SettingsModel";
-import DefaultSettingsContainer from "../../../Container/DefaultSettingsContainer";
 
 enum SetParameters {
     Name,
@@ -58,13 +55,7 @@ class SettingsModule extends AbstractModule
         const name = args[SetParameters.Name];
         const value = args[SetParameters.Value];
 
-        const update = await this._settingsService.UpdateSetting(message, name, value);
-        if (update) {
-            await message.channel.send(MessageFormatter.EmbedMessage(":white_check_mark: Successfully updated"));
-            SettingsModel.FlushValue(message.guild.id, name);
-        }
-
-        return;
+        await this._settingsService.UpdateSetting(message, name, value);
     }
 
     public async OnReset(message: Discord.Message, ...args: string[]): Promise<void>
@@ -76,24 +67,7 @@ class SettingsModule extends AbstractModule
     public async OnGet(message: Discord.Message, ...args: string[]): Promise<void>
     {
         const name = args[SetParameters.Name];
-        const defaultValues = DefaultSettingsContainer.Values();
-
-        if (name in defaultValues) {
-            const element = defaultValues[name];
-            if (element.printable === false) {
-                await message.channel.send(MessageFormatter.EmbedMessage(":x: Could not find setting", false));
-                return;
-            }
-        }
-
-        const value = await this._settingsService.Get(message.guild, name);
-
-        if (value != null) {
-            await message.channel.send(MessageFormatter.EmbedMessage(value));
-            return;
-        }
-
-        await message.channel.send(MessageFormatter.EmbedMessage(":x: Could not find setting", false));
+        await this._settingsService.PrintSetting(message, name);
     }
 }
 

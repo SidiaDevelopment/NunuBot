@@ -6,6 +6,8 @@ import {ISettings} from "../../Features/Settings/Services/SettingsService";
 import DefaultSettingsContainer from "../../Container/DefaultSettingsContainer";
 import DefaultPermissionContainer from "../../Container/DefaultPermissionContainer";
 import {IDefaultPermissions} from "../../Features/Permission/Services/PermissionService";
+import {ILocalizationFiles} from "../../Features/Localization/Services/LocalizationService";
+import LocalizationContainer from "../../Container/LocalizationContainer";
 
 export type IFactory = new () => AbstractFactory;
 export interface IFactories
@@ -19,6 +21,7 @@ abstract class AbstractFeature implements FeatureInterface
     protected _moduleFactories: IFactories;
     protected _permissions: IDefaultPermissions;
     protected _settings: ISettings;
+    protected _localization: ILocalizationFiles;
 
     public AddServiceFactories(): void
     {
@@ -64,6 +67,7 @@ abstract class AbstractFeature implements FeatureInterface
     public LoadSettings(): void {
         DefaultSettingsContainer.AddRange(this._settings);
         DefaultPermissionContainer.AddRange(this._permissions);
+        LocalizationContainer.AddRange(this._localization);
     }
 }
 

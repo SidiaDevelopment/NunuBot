@@ -1,0 +1,6 @@
+{
+  "settings.success": "Einstellung erfolgreich aktualisiert: :name",
+  "settings.reset": "Wert erfolgreich zurück auf Standard gesetzt",
+  "settings.doesNotExist": "Diese Einstellung existiert nicht",
+  "settings.onlyGlobal": "Diese Einstellung lässt sich nicht ändern"
+}

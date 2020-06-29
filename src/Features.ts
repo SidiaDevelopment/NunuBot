@@ -8,7 +8,7 @@ import DatabaseFeature from "./Features/Database/DatabaseFeature";
 import PermissionFeature from "./Features/Permission/PermissionFeature";
 import SettingsFeature from "./Features/Settings/SettingsFeature";
 import NunuBot, {Phase} from "./NunuBot";
-import DefaultPermissionContainer from "./Container/DefaultPermissionContainer";
+import LocalizationFeature from "./Features/Localization/LocalizationFeature";
 
 class Features
 {
@@ -20,7 +20,9 @@ class Features
         new HeartbeatFeature,
         new PermissionFeature,
         new SettingsFeature,
+        new LocalizationFeature,
     ];
+
 
     public LoadFeatures(): void
     {
@@ -42,7 +44,6 @@ class Features
 
         ModuleContainer.LoadAll();
 
-        console.log(DefaultPermissionContainer.Values());
         NunuBot.Phase = Phase.Running;
     }
 }

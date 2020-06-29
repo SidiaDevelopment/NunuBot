@@ -1,0 +1,6 @@
+{
+  "settings.success": "Successfully updated :name",
+  "settings.reset": "Successfully reset value to default",
+  "settings.doesNotExist": "Setting does not exist",
+  "settings.onlyGlobal": "Setting is not changeable"
+}

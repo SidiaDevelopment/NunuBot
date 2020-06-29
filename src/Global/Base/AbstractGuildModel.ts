@@ -30,12 +30,14 @@ abstract class AbstractGuildModel<T, OriginT = T>
                 if (Date.now() > element.expire && this._expire != -1)
                 {
                     delete this._container[guildId][name];
-                } else
+                }
+                else
                 {
                     return element.value;
                 }
             }
-        } else
+        }
+        else
         {
             this._container[guildId] = {};
         }

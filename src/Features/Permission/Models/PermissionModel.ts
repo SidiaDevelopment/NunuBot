@@ -10,7 +10,7 @@ interface IPermission
 
 class PermissionModel extends AbstractGuildModel<IPermission, Permission>
 {
-    _expire = 20;
+    _expire = 30 * 60;
 
     protected async Load(guildId: string, name: string): Promise<Permission[]>
     {

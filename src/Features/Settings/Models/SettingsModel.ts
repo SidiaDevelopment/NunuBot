@@ -10,7 +10,7 @@ export interface ISerializedSetting
 
 class SettingsModel extends AbstractGuildModel<ISerializedSetting, Setting>
 {
-    _expire = 20;
+    _expire = 30 * 60;
 
     protected async Load(guildId: string, name: string): Promise<Setting[]>
     {
