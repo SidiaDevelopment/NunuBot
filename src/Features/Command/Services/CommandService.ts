@@ -3,14 +3,14 @@ import DiscordEventApiService from "../../DiscordApi/Services/DiscordEventApiSer
 import * as Discord from "discord.js";
 import * as CommandParser from "discord-command-parser";
 import SettingsService from "../../Settings/Services/SettingsService";
-import PermissionService, {IDefaultPermission} from "../../Permission/Services/PermissionService";
+import PermissionService, {IPermission} from "../../Permission/Services/PermissionService";
 
 type CommandCallback = (message: Discord.Message, ...params: string[]) => void;
 
 export interface ICommand {
     command: string;
     callback: CommandCallback;
-    permissions?: IDefaultPermission
+    permissions?: IPermission
 }
 
 class CommandService extends AbstractService

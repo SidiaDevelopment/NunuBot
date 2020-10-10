@@ -12,7 +12,8 @@ class DiscordApiFeature extends AbstractFeature
         "DiscordEventApiService": DiscordEventApiServiceFactory,
     };
 
-    protected _moduleFactories: IFactories;
+    protected _moduleFactories: IFactories = {};
+
     protected _settings: ISettings = {
         "DiscordApi.ApiKey": {
             value: "",

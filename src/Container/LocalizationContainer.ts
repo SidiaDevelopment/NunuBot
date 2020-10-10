@@ -7,9 +7,10 @@ class LocalizationContainer
 
     public AddRange(localizationFiles: ILocalizationFiles): void
     {
-
         for (const localizationFilesKey in localizationFiles)
         {
+            if (!localizationFiles.hasOwnProperty(localizationFilesKey)) continue;
+
             const file = localizationFiles[localizationFilesKey];
             this.Add(localizationFilesKey, file);
         }
@@ -26,13 +27,6 @@ class LocalizationContainer
             ...this._values[language],
             ...file
         }
-
-        console.log(this._values);
-    }
-
-    public Values(): ILocalizationFiles
-    {
-        return this._values;
     }
 
     public Get(language: string, name: string)

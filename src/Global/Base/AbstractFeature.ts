@@ -5,7 +5,7 @@ import AbstractFactory from "../Base/AbstractFactory";
 import {ISettings} from "../../Features/Settings/Services/SettingsService";
 import DefaultSettingsContainer from "../../Container/DefaultSettingsContainer";
 import DefaultPermissionContainer from "../../Container/DefaultPermissionContainer";
-import {IDefaultPermissions} from "../../Features/Permission/Services/PermissionService";
+import {IPermissions} from "../../Features/Permission/Services/PermissionService";
 import {ILocalizationFiles} from "../../Features/Localization/Services/LocalizationService";
 import LocalizationContainer from "../../Container/LocalizationContainer";
 
@@ -19,7 +19,7 @@ abstract class AbstractFeature implements FeatureInterface
 {
     protected _serviceFactories: IFactories;
     protected _moduleFactories: IFactories;
-    protected _permissions: IDefaultPermissions;
+    protected _permissions: IPermissions;
     protected _settings: ISettings;
     protected _localization: ILocalizationFiles;
 

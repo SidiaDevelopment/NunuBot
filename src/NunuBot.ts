@@ -16,6 +16,7 @@ class NunuBot
         Logger.log(LogLevel.Debug, "Starting bot");
         const features = new Features();
         features.LoadFeatures();
+        features.Start();
 	}
 }
 

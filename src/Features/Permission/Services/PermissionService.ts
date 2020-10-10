@@ -3,14 +3,14 @@ import PermissionModel from "../Models/PermissionModel";
 import * as Discord from "discord.js";
 import DefaultPermissionContainer from "../../../Container/DefaultPermissionContainer";
 
-export interface IDefaultPermission {
+export interface IPermission {
     allowByDefault?: boolean;
     defaultStrategy?: () => boolean;
     grantFor?: Discord.PermissionResolvable
 }
 
-export interface IDefaultPermissions {
-    [key: string]: IDefaultPermission;
+export interface IPermissions {
+    [key: string]: IPermission;
 }
 
 class PermissionService extends AbstractService

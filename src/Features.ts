@@ -41,7 +41,10 @@ class Features
         this._features.forEach(v => {
             v.AddModuleFactories();
         });
+    }
 
+    public Start(): void
+    {
         ModuleContainer.LoadAll();
 
         NunuBot.Phase = Phase.Running;

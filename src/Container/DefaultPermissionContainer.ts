@@ -1,14 +1,14 @@
-import {IDefaultPermission, IDefaultPermissions} from "../Features/Permission/Services/PermissionService";
+import {IPermission, IPermissions} from "../Features/Permission/Services/PermissionService";
 
 class DefaultPermissionContainer
 {
-    private _defaultValues: IDefaultPermissions = {}
+    private _defaultValues: IPermissions = {}
 
-    public Add(name: string, permission: IDefaultPermission): void {
+    public Add(name: string, permission: IPermission): void {
         this._defaultValues[name] = permission;
     }
 
-    public AddRange(permissions: IDefaultPermissions): void {
+    public AddRange(permissions: IPermissions): void {
         const oldValues = this._defaultValues;
         this._defaultValues = {
             ...oldValues,
@@ -16,7 +16,7 @@ class DefaultPermissionContainer
         }
     }
 
-    public Values(): IDefaultPermissions {
+    public Values(): IPermissions {
         return this._defaultValues;
     }
 }

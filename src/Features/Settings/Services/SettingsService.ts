@@ -22,7 +22,7 @@ export interface ISettings
 
 class SettingsService extends AbstractService
 {
-    public name = "PermissionService";
+    public name = "SettingsService";
 
     private readonly _databaseService: DatabaseService;
     private readonly _localizationService: LocalizationService;
